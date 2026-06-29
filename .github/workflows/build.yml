@@ -156,17 +156,6 @@ jobs:
               docker push $IMAGE_REF
               docker tag $IMAGE_REF $CREATEREPO_C_BRANCH_IMAGE_REF
               docker push $CREATEREPO_C_BRANCH_IMAGE_REF
-
-              if [ "${{ env.IS_STABLE }}" = "true" ]; then
-                ALT_IMAGE=${{ env.NAMESPACE }}/createrepo:${{ env.DOCKER_TAG }}-$os-$arch
-                CREATEREPO_C_BRANCH_ALT_IMAGE=${{ env.NAMESPACE }}/createrepo:${{ env.CREATEREPO_C_BRANCH }}-$os-$arch
-                echo "=== Tagging and pushing $ALT_IMAGE ==="
-                docker tag $IMAGE_REF $ALT_IMAGE
-                docker push $ALT_IMAGE
-
-                docker tag $IMAGE_REF $CREATEREPO_C_BRANCH_ALT_IMAGE
-                docker push $CREATEREPO_C_BRANCH_ALT_IMAGE
-              fi
             done
 
             echo "=== Creating multi-arch manifest ${{ env.NAMESPACE }}/createrepo:${{ env.DOCKER_TAG }}-$os ==="
