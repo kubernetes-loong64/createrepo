@@ -48,4 +48,6 @@ ENV LD_LIBRARY_PATH=/usr/local/lib64:$LD_LIBRARY_PATH
 RUN dnf install -y zchunk \
     && dnf clean all \
     && rm -rf /var/cache/dnf \
-    && createrepo_c --version
+    && createrepo_c --version \
+    && ln -sf /usr/local/bin/createrepo_c /usr/local/bin/createrepo \
+    && createrepo --version
