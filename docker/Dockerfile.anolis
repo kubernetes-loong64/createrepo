@@ -1,0 +1,51 @@
+ARG BASE_IMAGE=openanolis/anolisos:23.4
+FROM $BASE_IMAGE AS builder
+
+ARG CREATEREPO_C_BRANCH=1.2.4
+
+ENV LD_LIBRARY_PATH=/usr/local/lib64:$LD_LIBRARY_PATH
+
+RUN dnf install -y \
+    git \
+    cmake \
+    gcc \
+    bzip2-devel \
+    libcurl-devel \
+    libxml2-devel \
+    openssl-devel \
+    glib2-devel \
+    sqlite-devel \
+    rpm-devel \
+    zchunk-devel \
+    libmodulemd-devel \
+    python3-devel \
+    doxygen
+
+RUN git clone --branch ${CREATEREPO_C_BRANCH} https://github.com/rpm-software-management/createrepo_c.git \
+    && cd createrepo_c \
+    && mkdir build \
+    && cd build \
+    && cmake .. \
+    && make -j$(nproc) prefix=/usr/local \
+    && make -j$(nproc) install prefix=/usr/local
+
+FROM $BASE_IMAGE
+
+LABEL maintainer="徐晓伟 <xuxiaowei@xuxiaowei.com.cn>" \
+      license="Apache-2.0" \
+      org.opencontainers.image.authors="徐晓伟 <xuxiaowei@xuxiaowei.com.cn>" \
+      org.opencontainers.image.licenses="Apache-2.0" \
+      org.opencontainers.image.title="LoongArch createrepo_c" \
+      org.opencontainers.image.description="createrepo_c ${CREATEREPO_C_BRANCH} for LoongArch (loong64)" \
+      org.opencontainers.image.version="${CREATEREPO_C_BRANCH}" \
+      org.opencontainers.image.url="https://github.com/kubernetes-loong64/createrepo-loong64" \
+      org.opencontainers.image.source="https://github.com/kubernetes-loong64/createrepo-loong64"
+
+COPY --from=builder /usr/local /usr/local
+
+ENV LD_LIBRARY_PATH=/usr/local/lib64:$LD_LIBRARY_PATH
+
+RUN dnf install -y zchunk \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf \
+    && createrepo_c --version
