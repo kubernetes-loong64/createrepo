@@ -217,6 +217,19 @@ jobs:
           Download and load the image:
 
           ```shell
+          curl -LO ${{ env.BASE_URL }}/createrepo-${{ env.DOCKER_TAG }}-anolis-loong64.tar
+          docker load -i createrepo-${{ env.DOCKER_TAG }}-anolis-loong64.tar
+
+          curl -LO ${{ env.BASE_URL }}/createrepo-${{ env.DOCKER_TAG }}-anolis-amd64.tar
+          docker load -i createrepo-${{ env.DOCKER_TAG }}-anolis-amd64.tar
+
+          curl -LO ${{ env.BASE_URL }}/createrepo-${{ env.DOCKER_TAG }}-anolis-arm64.tar
+          docker load -i createrepo-${{ env.DOCKER_TAG }}-anolis-arm64.tar
+          ```
+
+          Or pull the multi-arch manifest directly:
+
+          ```shell
           docker pull ${{ env.NAMESPACE }}/createrepo:${{ env.DOCKER_TAG }}-anolis
           ```
 
