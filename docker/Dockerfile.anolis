@@ -35,11 +35,11 @@ LABEL maintainer="徐晓伟 <xuxiaowei@xuxiaowei.com.cn>" \
       license="Apache-2.0" \
       org.opencontainers.image.authors="徐晓伟 <xuxiaowei@xuxiaowei.com.cn>" \
       org.opencontainers.image.licenses="Apache-2.0" \
-      org.opencontainers.image.title="LoongArch createrepo_c" \
-      org.opencontainers.image.description="createrepo_c ${CREATEREPO_C_BRANCH} for LoongArch (loong64)" \
+      org.opencontainers.image.title="createrepo_c" \
+      org.opencontainers.image.description="createrepo_c ${CREATEREPO_C_BRANCH}" \
       org.opencontainers.image.version="${CREATEREPO_C_BRANCH}" \
-      org.opencontainers.image.url="https://github.com/kubernetes-loong64/createrepo-loong64" \
-      org.opencontainers.image.source="https://github.com/kubernetes-loong64/createrepo-loong64"
+      org.opencontainers.image.url="https://github.com/kubernetes-loong64/createrepo" \
+      org.opencontainers.image.source="https://github.com/kubernetes-loong64/createrepo"
 
 COPY --from=builder /usr/local /usr/local
 
