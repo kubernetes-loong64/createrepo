@@ -31,6 +31,8 @@ RUN git clone --branch ${CREATEREPO_C_BRANCH} https://github.com/rpm-software-ma
 
 FROM $BASE_IMAGE
 
+ARG CREATEREPO_C_BRANCH=1.2.4
+
 LABEL maintainer="徐晓伟 <xuxiaowei@xuxiaowei.com.cn>" \
       license="Apache-2.0" \
       org.opencontainers.image.authors="徐晓伟 <xuxiaowei@xuxiaowei.com.cn>" \
